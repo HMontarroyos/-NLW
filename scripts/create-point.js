@@ -28,6 +28,9 @@ stateInput.value = event.target.options[indexOfSelectedState].text
 
 const url= `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${ufValue}/municipios`
 
+citySelect.innerHTML = "<option value>Selecione a Cidade</option>"
+citySelect.innerHTML = true
+
 fetch(url)
     .then(res => res.json() )
     .then( cities =>   {
@@ -50,58 +53,56 @@ document.querySelector("select[name =uf]")
 .addEventListener("change" , getCities)
 
 
+// Itens de coleta
+// adicionando um ouvidor de eventos em cada item da lista
+const itemsToCollect = document.querySelectorAll(".items-grid li")
 
-/*
-
-faltou o function case sensitive 
-faltou o igual no value ao passar o dollar 
-
-function populateufs(){
-
-    const ufSelect = document.querySelector ( "select[name=uf]")
-
-    fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
-    .then(res => res.json() )
-    .then( states =>   {
-
-             for(const state of states ){
-                ufSelect.innerHTML += `<option value"${state.id}">${state.nome}</option>`
-             }
-             
-
-        } )
+for(const item of itemsToCollect) {
+    item.addEventListener("click", handleSelectedItem)
 }
 
-populateufs()
+const collectedItems = document.querySelector("input[name=items]")
 
+let selectedItems = [1, 2, 3 , 4, 5, 6]
 
+function handleSelectedItem(event) {
 
+    const itemLi = event.target
 
-function getCities(event){
+    // adicionar ou remover a classe, dependendo do estado
+    itemLi.classList.toggle("selected")
 
-    const citySelect = document.querySelector ( "select[name=city]")
+    const itemId = itemLi.dataset.id
 
-const ufValue = event.target.value
+    
+    // verificar se existem itens selecionados, se sim
+    // pegar os itens selecionados
 
-const url= `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${ufValue}/municipios`
+    const alreadySelected = selectedItems.findIndex( item => {
+        // isso será true ou false
+        const itemFound = item == itemId
+        return itemFound
+    })
 
-fetch(url)
-    .then(res => res.json() )
-    .then( cities =>   {
+    // se já estiver selecionado
+    if( alreadySelected >= 0 ) {
+        // tirar da seleção
+        const filteredItems = selectedItems.filter( item => {
+            const itemIsDifferent = item != itemId
+            return itemIsDifferent
+        })
 
-             for(const city of cities ){
-                citySelect.innerHTML += `<option value="${city.id}">${city.nome}</option>`
-             }
+        selectedItems = filteredItems
+    } else {
+        // se não estiver selecionado, adicionar a seleção
+        // adicionar a seleção
+        selectedItems.push(itemId)
+    }
 
-
-             citySelect.disabled = false
-             
-
-        } )
-
+    // atualizar o campo escondido com os itens selecionados
+    collectedItems.value = selectedItems
+    
 }
 
 
 
-document.querySelector("select[name =uf]")
-.addEventListener("change" , getCities)*/
