@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Francois+One&family=Oswald:wght@700&family=Pacifico&family=Roboto:wght@100&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/index.css"/>
     <link rel="stylesheet" type="text/css" href="styles/create-point.css"/>
-    <link rel="stylesheet" type="text/css" href="/public/styles/modal.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/modal.css"/>
     <link rel="stylesheet" type="text/css" href="styles/responsive.css"/>
     <title>Criar Um ponto de Coleta</title>
 </head>
@@ -109,14 +109,16 @@
 
         </form>
 
-        {% block modal %}
-        {% if saved %}
-            {% include "partials/point-created.html" %}
-        {% endif %}
-    {% endblock modal %}
-
     </div>
+    {% block modal %}
+    {% if saved %}
+        {% include "partials/point-created.html" %}        
+    {% endif %}
+{% endblock modal %}  
+
 
     <script src="/scripts/create-point.js"></script>
 </body>
 </html>
+
+
