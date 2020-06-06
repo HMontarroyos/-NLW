@@ -63,7 +63,7 @@ for(const item of itemsToCollect) {
 
 const collectedItems = document.querySelector("input[name=items]")
 
-let selectedItems = [1, 2, 3 , 4, 5, 6]
+let selectedItems = []
 
 function handleSelectedItem(event) {
 
